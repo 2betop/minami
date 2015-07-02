@@ -4,37 +4,48 @@
     <meta charset="utf-8">
     <title><?js= title ?> - Documentation</title>
 
+    <script src="/static/js/jquery.min.js"></script>
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
 
     <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
     <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 
-    <link rel="stylesheet" href="/static/assets/css/index.css">
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="http://www.baidu.com/favicon.ico">
-    <link rel="stylesheet" href="/static/assets/plugin/list.css">
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/static/css/normalize.css" rel="stylesheet">
+    <link href="/static/css/main.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="/static/css/page.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/static/css/github.css" rel="stylesheet" type="text/css" media="all">
+    <link href="/static/css/perfect-scrollbar.min.css" rel="stylesheet">
+    <link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/static/js/html5shiv.js"></script>
+    <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="/static/js/scrollspy.js"></script>
 </head>
 <body>
-<link rel="import" href="../widget/header.html?__inline">
-<div class="jsdoc-wrapper">
-  <div class="jsdoc-inner">
-    <nav class="jsdoc">
+<link rel="import" href="/widget/header.html?__inline">
+<div id="main" class="fix-sidebar">
+    <div class="sidebar scrollbar ps-container">
       <?js= this.nav ?>
-    </nav>
+    </div>
 
-    <div id="main">
+    <div class="content api with-sidebar">
         <?js if (title != 'Home') { ?>
         <h1 class="page-title"><?js= title ?></h1>
         <?js } ?>
 
         <?js= content ?>
     </div>
-  </div>
 </div>
 
 <footer>
@@ -45,5 +56,87 @@
 
 <script>prettyPrint();</script>
 <script src="scripts/linenumber.js"></script>
+<!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/perfect-scrollbar.min.js"></script>
+<script type="text/javascript">
+    (function(){
+        var scrollBarEnabled = false;
+
+        function isIE( version, comparison ){
+            var $div = $('<div style="display:none;"/>').appendTo($('body'));
+            $div.html('<!--[if '+(comparison||'')+' IE '+(version||'')+']><a>&nbsp;</a><![endif]-->');
+            var ieTest = $div.find('a').length;
+            $div.remove();
+            return ieTest;
+        }
+
+        function updateScrollBar(){
+            function enableScrollBar(){
+                if (scrollBarEnabled)
+                    return;
+                scrollBarEnabled = true;
+                $(".sidebar").perfectScrollbar({
+                    wheelSpeed: 10,
+                    wheelPropagation: false
+                });
+            }
+
+            function disableScrollBar(){
+                if (!scrollBarEnabled)
+                    return;
+                scrollBarEnabled = false;
+                $(".sidebar").perfectScrollbar('destroy');
+            }
+
+            if ($(window).width()>760 && $(".sidebar").height() < $(".sidebar ul").height()){
+                enableScrollBar();
+            }else{
+                disableScrollBar();
+            }
+        }
+
+        //设置链接当前样式
+        function setActive(){
+            var href= window.location.href;
+            $(".sidebar li a").each(function(){
+                var link = $(this).attr("href");
+                if(String(href).indexOf(link) > -1){
+                    $(this).addClass("active");
+                }
+            })
+        }
+
+        //hash平滑滚动
+        $('.sidebar li a').click(function(){
+            var href= $(this).attr('href');
+            var top = 0;
+            $(".content a").each(function(){
+                if(String(href).indexOf($(this).attr("href")) > -1){
+                    top = $(this).offset().top;
+                    return;
+                }
+            })
+            if(top){
+                $('.sidebar li a').removeClass("active");
+                $(this).addClass("active");
+                top = top - 100 > 0 ? top - 100 : 0;
+                $('html, body').animate({
+                    scrollTop: top
+                });
+            }
+        });
+
+
+        setActive();
+
+
+        if (!isIE(8, 'lte')){
+            $(".sidebar").addClass('scrollbar');
+            updateScrollBar();
+            $(window).resize(updateScrollBar);
+        }
+    }());
+</script>
 </body>
 </html>
