@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-weight: 300;
   font-size: 48px;
-  margin: 1em 0 .5em;
+  /*margin: 1em 0 .5em;*/
 }
 
 h1.page-title {
@@ -102,12 +102,6 @@ tt, code, kbd, samp {
   margin: 0
 }
 
-#main {
-  float: right;
-  min-width: 360px;
-  width: calc(100% - 250px);
-}
-
 header {
   display: block
 }
@@ -129,17 +123,13 @@ section {
   font-weight: lighter;
 }
 
-nav {
-  float: left;
-  display: block;
-  width: 250px;
+nav.jsdoc {
   background: #fff;
   overflow: auto;
-  position: fixed;
   height: 100%;
 }
 
-nav h3 {
+nav.jsdoc h3 {
   margin-top: 12px;
   font-size: 13px;
   text-transform: uppercase;
@@ -151,7 +141,7 @@ nav h3 {
   color: #000;
 }
 
-nav ul {
+nav.jsdoc ul {
   font-family: 'Lucida Grande', 'Lucida Sans Unicode', arial, sans-serif;
   font-size: 100%;
   line-height: 17px;
@@ -160,8 +150,8 @@ nav ul {
   list-style-type: none;
 }
 
-nav ul a,
-nav ul a:active {
+nav.jsdoc ul a,
+nav.jsdoc ul a:active {
   font-family: 'Montserrat', sans-serif;
   line-height: 18px;
   padding: 0;
@@ -169,53 +159,59 @@ nav ul a:active {
   font-size: 12px;
 }
 
-nav ul a:hover,
-nav ul a:active {
+nav.jsdoc ul a:hover,
+nav.jsdoc ul a:active {
   color: hsl(200, 100%, 43%);
   text-decoration: none;
 }
 
-nav > ul {
+nav.jsdoc > ul {
   padding: 0 10px;
 }
 
-nav > ul > li > a {
+nav.jsdoc > ul > li > a {
   color: #000;
 }
 
-nav ul ul {
+nav.jsdoc ul ul {
   margin-bottom: 10px
 }
 
-nav ul ul a {
+nav.jsdoc ul ul a {
   color: hsl(207, 1%, 60%);
   border-left: 1px solid hsl(207, 10%, 86%);
 }
 
-nav ul ul a,
-nav ul ul a:active {
+nav.jsdoc ul ul a,
+nav.jsdoc ul ul a:active {
   padding-left: 20px
 }
 
-nav h2 {
+nav.jsdoc h2 {
    font-size: 12px;
    margin: 0;
    padding: 0;
 }
 
-nav > h2 > a {
+nav.jsdoc > h2 > a {
    display: block;
    margin: 10px 0 -10px;
    color: hsl(202, 71%, 50%) !important;
 }
 
+.footer-inner {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 footer {
   color: hsl(0, 0%, 28%);
-  margin-left: 250px;
   display: block;
   padding: 15px;
   font-style: italic;
   font-size: 90%;
+  margin-top: 50px;
 }
 
 .ancestors {
@@ -311,7 +307,7 @@ footer {
   font-size: 100%;
   line-height: 18px;
   display: block;
-  margin: 0 30px;
+  margin: 0 15px;
   background-color: #fff;
   color: #4D4E53;
 }
@@ -517,7 +513,7 @@ dl.param-type {
   transform: scale(0.75) rotate(45deg);
 }
 
-.nav-trigger:checked ~ nav {
+.nav-trigger:checked ~ nav.jsdoc {
   left: 0 !important;
 }
 
@@ -549,7 +545,7 @@ dl.param-type {
     overflow-x: hidden;
   }
 
-  nav {
+  nav.jsdoc {
     background: #FFF;
     width: 250px;
     height: 100%;
@@ -587,4 +583,26 @@ dl.param-type {
   footer {
     margin-left: 0;
   }
+}
+
+.jsdoc-wrapper {
+  margin: 80px auto auto;
+  width: 1000px;
+  overflow-x: visible;
+}
+.jsdoc-inner {
+  display: table;
+  position: relative;
+  width: 100%;
+}
+
+.jsdoc-inner nav.jsdoc {
+  display: table-cell;
+  width: 250px;
+  vertical-align: top;
+}
+
+.jsdoc-inner #main {
+  display: table-cell;
+  vertical-align: top;
 }
